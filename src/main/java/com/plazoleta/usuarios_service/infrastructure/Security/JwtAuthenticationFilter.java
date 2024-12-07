@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.Collections;
 
-public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -23,7 +23,7 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
         try {
             authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
         }catch (IOException e){
-
+          throw  new IllegalArgumentException(e);
         }
 
         UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
@@ -41,8 +41,6 @@ public class JwtAuthFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails= (UserDetailsImpl) authResult.getPrincipal();
-        //System.out.println(Arrays.stream(userDetails.getAuthorities().toArray()).findFirst().toString());
-        //userDetails.getAuthorities().toString()
         Object[] authorities = userDetails.getAuthorities().toArray();
         System.out.println(authorities[0].toString());
         String token = TokenUtils.createToken(userDetails.getName(), userDetails.getUsername(),
