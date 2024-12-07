@@ -31,7 +31,7 @@ public class UserEntity {
     private String email;
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "rol", nullable = false)
     private RolEntity rol;

@@ -1,4 +1,4 @@
-package com.plazoleta.usuarios_service.Security;
+package com.plazoleta.usuarios_service.infrastructure.Security;
 
 
 import jakarta.servlet.FilterChain;
@@ -22,7 +22,7 @@ public class JWTAuthorizationFilter  extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
 
         if(bearerToken!= null && bearerToken.startsWith("Bearer ")){
-            String token = bearerToken.replace("Bearer", "");
+            String token = bearerToken.replace("Bearer ", "");
             UsernamePasswordAuthenticationToken usernamePAT = TokenUtils.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(usernamePAT);
         }

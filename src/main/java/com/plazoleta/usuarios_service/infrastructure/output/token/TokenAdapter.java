@@ -1,26 +1,32 @@
 package com.plazoleta.usuarios_service.infrastructure.output.token;
 
-import com.plazoleta.usuarios_service.domain.spi.token.Itoken;
+import com.plazoleta.usuarios_service.infrastructure.Security.TokenUtils;
+import com.plazoleta.usuarios_service.domain.spi.token.IToken;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-public class TokenAdapter implements Itoken {
+public class TokenAdapter implements IToken {
 
     @Override
     public String getBearerToken() {
-        return "";
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
     }
 
     @Override
     public String getEmail(String token) {
-        return "";
+        if(token==(null)) throw  new IllegalArgumentException();
+        return TokenUtils.getEmail(token.replace("Bearer ",""));
     }
 
     @Override
     public Long getUserAuthId(String token) {
-        return 0L;
+        if(token==(null)) throw  new IllegalArgumentException();
+        return TokenUtils.getUsuarioAutenticadoId(token.replace("Bearer ",""));
     }
 
     @Override
     public String getUserAuthRol(String token) {
-        return "";
+        if(token==(null)) throw  new IllegalArgumentException();
+        return TokenUtils.getUsuarioAutenticadoRol(token.replace("Bearer ",""));
     }
 }

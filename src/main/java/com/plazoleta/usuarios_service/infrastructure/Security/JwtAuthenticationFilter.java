@@ -1,4 +1,4 @@
-package com.plazoleta.usuarios_service.Security;
+package com.plazoleta.usuarios_service.infrastructure.Security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -18,12 +18,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        AuthCredentials authCredentials= new AuthCredentials();
+        AuthCredentials authCredentials = new AuthCredentials();
 
         try {
             authCredentials = new ObjectMapper().readValue(request.getReader(), AuthCredentials.class);
         }catch (IOException e){
-          throw  new IllegalArgumentException(e);
         }
 
         UsernamePasswordAuthenticationToken usernamePAT = new UsernamePasswordAuthenticationToken(
@@ -42,10 +41,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetails= (UserDetailsImpl) authResult.getPrincipal();
         Object[] authorities = userDetails.getAuthorities().toArray();
-        System.out.println(authorities[0].toString());
         String token = TokenUtils.createToken(userDetails.getName(), userDetails.getUsername(),
                 authorities[0].toString(), userDetails.getId());
-        response.addHeader("Authorization", "Bearer "+token);
+        response.addHeader("Authorization", "Bearer "+ token);
         response.getWriter().flush();
 
         super.successfulAuthentication(request, response, chain, authResult);

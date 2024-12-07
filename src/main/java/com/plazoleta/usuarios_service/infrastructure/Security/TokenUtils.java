@@ -1,4 +1,4 @@
-package com.plazoleta.usuarios_service.Security;
+package com.plazoleta.usuarios_service.infrastructure.Security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

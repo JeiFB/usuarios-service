@@ -1,4 +1,4 @@
-package com.plazoleta.usuarios_service.Security;
+package com.plazoleta.usuarios_service.infrastructure.Security;
 
 import com.plazoleta.usuarios_service.domain.models.User;
 import com.plazoleta.usuarios_service.infrastructure.output.jpa.entity.UserEntity;
