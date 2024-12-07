@@ -1,5 +1,5 @@
 package com.plazoleta.usuarios_service.infrastructure.configuration;
-
+import com.plazoleta.usuarios_service.domain.spi.token.IToken;
 import com.plazoleta.usuarios_service.domain.api.IRolServicePort;
 import com.plazoleta.usuarios_service.domain.api.IUserServicePort;
 import com.plazoleta.usuarios_service.domain.spi.passwordencoder.IPasswordEncoderPort;
@@ -14,6 +14,7 @@ import com.plazoleta.usuarios_service.infrastructure.output.jpa.mapper.IUserEnti
 import com.plazoleta.usuarios_service.infrastructure.output.jpa.repository.IRolRepository;
 import com.plazoleta.usuarios_service.infrastructure.output.jpa.repository.IUserRepository;
 import com.plazoleta.usuarios_service.infrastructure.output.passwordencoder.BCryptPasswordEncoderAdapter;
+import com.plazoleta.usuarios_service.infrastructure.output.token.TokenAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +38,7 @@ public class BeanConfiguration {
     }
     @Bean
     public IUserServicePort userServicePort(){
-        return  new UserUseCase(passwordEncoderPort(),userPersistencePort());
+        return  new UserUseCase(passwordEncoderPort(),userPersistencePort(), token());
     }
 
     @Bean
@@ -48,5 +49,10 @@ public class BeanConfiguration {
     @Bean
     public IRolServicePort rolServicePort(){
         return  new RolUseCase(rolPersistencePort());
+    }
+
+    @Bean
+    public IToken token(){
+        return new TokenAdapter();
     }
 }
