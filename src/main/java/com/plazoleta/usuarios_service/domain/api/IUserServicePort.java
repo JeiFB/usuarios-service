@@ -5,7 +5,6 @@ import com.plazoleta.usuarios_service.domain.models.User;
 public interface IUserServicePort {
     //methods for our service
     void saveUser(User user);
-    User getUserById(String email);
-    Boolean existsByEmail(String email);
+    Boolean existsUserById(Long id);
 
 }

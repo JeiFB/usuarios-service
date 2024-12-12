@@ -40,6 +40,11 @@ public class UserUseCase implements IUserServicePort {
         userPersistencePort.saveUser(user);
     }
 
+    @Override
+    public Boolean existsUserById(Long id) {
+        return userPersistencePort.existsUserById(id);
+    }
+
     private boolean isMinor(LocalDate birthDate) {
         if(birthDate == null) return false;
         LocalDate today = LocalDate.now();
@@ -86,15 +91,6 @@ public class UserUseCase implements IUserServicePort {
         restaurantAndEmployee.setEmployeeId(employee_id);
         restaurantAndEmployeeFeignClientPort.saveEmployeeInRestaurant(restaurantAndEmployee);
 
-    }
-
-    public User getUserByEmail(String email){
-        return userPersistencePort.getUserByEmail(email);
-    }
-
-    @Override
-    public Boolean existsByEmail(String email) {
-        return null;
     }
 
 

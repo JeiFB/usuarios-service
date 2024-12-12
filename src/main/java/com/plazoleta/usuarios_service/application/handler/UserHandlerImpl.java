@@ -23,4 +23,9 @@ public class UserHandlerImpl implements IUserHandler{
         User user = iUserRequestMapper.toUser(userRequestDto);
         iUserServicePort.saveUser(user);
     }
+
+    @Override
+    public Boolean existUserById(Long id) {
+        return iUserServicePort.existsUserById(id);
+    }
 }
