@@ -1,6 +1,10 @@
 package com.plazoleta.usuarios_service.domain.usecase;
 
+import com.plazoleta.usuarios_service.domain.models.Restaurant;
+import com.plazoleta.usuarios_service.domain.models.RestaurantAndEmployee;
 import com.plazoleta.usuarios_service.domain.models.Rol;
+import com.plazoleta.usuarios_service.domain.spi.feignclients.IRestaurantAndEmployeeFeignClientPort;
+import com.plazoleta.usuarios_service.domain.spi.feignclients.IRestaurantFeingClientPort;
 import com.plazoleta.usuarios_service.domain.spi.passwordencoder.IPasswordEncoderPort;
 import com.plazoleta.usuarios_service.domain.spi.persistence.IUserPersistencePort;
 import com.plazoleta.usuarios_service.domain.api.IUserServicePort;
@@ -18,6 +22,8 @@ public class UserUseCase implements IUserServicePort {
 
     private final IPasswordEncoderPort passwordEncoderPort;
     private final IUserPersistencePort userPersistencePort;
+    private final IRestaurantFeingClientPort restaurantFeingClientPort;
+    private final IRestaurantAndEmployeeFeignClientPort restaurantAndEmployeeFeignClientPort;
     private final IToken token;
 
 
@@ -64,5 +70,29 @@ public class UserUseCase implements IUserServicePort {
                 user.setRol(rol);
             }
     }
+
+    public void saveEmployeeInRestaurant(User user){
+        RestaurantAndEmployee restaurantAndEmployee = new RestaurantAndEmployee();
+
+        String bearerToken = token.getBearerToken();
+        Long idOwnerAuth = token.getUserAuthId(bearerToken);
+
+        Restaurant restaurant = restaurantFeingClientPort.getRestaurantByOwnerId(idOwnerAuth);
+        System.out.println(restaurant);
+        Long employee_id = userPersistencePort.getUserByEmail(user.getEmail()).getId();
+        System.out.println(employee_id);
+
+        restaurantAndEmployee.setRestaurantId(restaurant.getId());
+        restaurantAndEmployee.setEmployeeId(employee_id);
+        restaurantAndEmployeeFeignClientPort.saveEmployeeInRestaurant(restaurantAndEmployee);
+
+    }
+
+    public User getUserByEmail(String email){
+        return userPersistencePort.getUserByEmail(email);
+    }
+
+
+
 }
 

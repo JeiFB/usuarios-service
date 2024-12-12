@@ -7,7 +7,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,7 +69,7 @@ public class TokenUtils {
         }
     }
 
-    public static Long getUsuarioAutenticadoId(String token){
+    public static Long getUserAuthenticationId(String token){
         try {
             Claims claims  = Jwts.parserBuilder()
                     .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
@@ -85,7 +84,7 @@ public class TokenUtils {
         }
     }
 
-    public static String getUsuarioAutenticadoRol(String token){
+    public static String getUserAuthenticationRol(String token){
         try {
             Claims claims  = Jwts.parserBuilder()
                     .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())

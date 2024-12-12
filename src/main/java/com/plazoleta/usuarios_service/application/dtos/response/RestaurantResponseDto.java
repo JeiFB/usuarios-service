@@ -1,15 +1,15 @@
-package com.plazoleta.usuarios_service.domain.models;
+package com.plazoleta.usuarios_service.application.dtos.response;
 
-import lombok.AllArgsConstructor;
+import com.plazoleta.usuarios_service.domain.models.Rol;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Restaurant {
+public class RestaurantResponseDto {
     private Long id;
     private String name;
     private String nit;

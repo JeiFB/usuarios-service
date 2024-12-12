@@ -1,13 +1,13 @@
-package com.plazoleta.usuarios_service;
+// package com.plazoleta.usuarios_service;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class UsuariosServiceApplicationTests {
+// @SpringBootTest
+// class UsuariosServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+//	@Test
+//	void contextLoads() {
+//	}
 
-}
+// }

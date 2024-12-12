@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
     private final IUserHandler userHandler;
 
-
     public UserRestController(IUserHandler userHandler){
         this.userHandler = userHandler;
     }
@@ -37,8 +36,6 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-
-
     @Operation(summary = "Add a new employee")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Employee created", content = @Content),
@@ -48,8 +45,6 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UserRequestDto employee) {
         userHandler.saveUserInUsers(employee);
-        //userHandler.saveRestaurantEmployee(empleado);
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

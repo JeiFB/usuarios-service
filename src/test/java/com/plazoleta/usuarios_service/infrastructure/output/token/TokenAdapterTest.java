@@ -80,7 +80,7 @@ class TokenAdapterTest {
         // Arrange
         String mockToken = "Bearer mockToken";
         try (MockedStatic<TokenUtils> mockedTokenUtils = mockStatic(TokenUtils.class)) {
-            mockedTokenUtils.when(() -> TokenUtils.getUsuarioAutenticadoId("mockToken")).thenReturn(1L);
+            mockedTokenUtils.when(() -> TokenUtils.getUserAuthenticationId("mockToken")).thenReturn(1L);
 
             // Act
             Long result = tokenAdapter.getUserAuthId(mockToken);
@@ -102,7 +102,7 @@ class TokenAdapterTest {
         // Arrange
         String mockToken = "Bearer mockToken";
         try (MockedStatic<TokenUtils> mockedTokenUtils = mockStatic(TokenUtils.class)) {
-            mockedTokenUtils.when(() -> TokenUtils.getUsuarioAutenticadoRol("mockToken")).thenReturn("ROLE_USER");
+            mockedTokenUtils.when(() -> TokenUtils.getUserAuthenticationRol("mockToken")).thenReturn("ROLE_USER");
 
             // Act
             String result = tokenAdapter.getUserAuthRol(mockToken);
