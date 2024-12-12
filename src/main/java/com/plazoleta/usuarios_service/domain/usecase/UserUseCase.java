@@ -92,6 +92,10 @@ public class UserUseCase implements IUserServicePort {
         return userPersistencePort.getUserByEmail(email);
     }
 
+    @Override
+    public Boolean existsByEmail(String email) {
+        return null;
+    }
 
 
 }
