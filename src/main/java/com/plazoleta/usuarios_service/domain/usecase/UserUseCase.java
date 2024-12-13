@@ -30,9 +30,6 @@ public class UserUseCase implements IUserServicePort {
     @Override
     public void saveUser(User user) {
         validaRolAuthAndNot(user);
-        if(userPersistencePort.existsByEmail(user.getEmail())){
-            throw new IllegalArgumentException("El email existe");
-        }
         if ( (user.getRol().getId() == 3) && isMinor(user.getBirtDate())) {
             throw new IllegalArgumentException("El usuario es menor de edad.");
         }
@@ -76,23 +73,30 @@ public class UserUseCase implements IUserServicePort {
             }
     }
 
-    public void saveEmployeeInRestaurant(User user){
+    @Override
+    public void saveRestaurantAndEmployee(User user) {
         RestaurantAndEmployee restaurantAndEmployee = new RestaurantAndEmployee();
 
         String bearerToken = token.getBearerToken();
         Long idOwnerAuth = token.getUserAuthId(bearerToken);
 
         Restaurant restaurant = restaurantFeingClientPort.getRestaurantByOwnerId(idOwnerAuth);
-        System.out.println(restaurant);
         Long employee_id = userPersistencePort.getUserByEmail(user.getEmail()).getId();
-        System.out.println(employee_id);
 
         restaurantAndEmployee.setRestaurantId(restaurant.getId());
         restaurantAndEmployee.setEmployeeId(employee_id);
         restaurantAndEmployeeFeignClientPort.saveEmployeeInRestaurant(restaurantAndEmployee);
-
     }
 
+    @Override
+    public User getUserById(Long userId) {
+        return userPersistencePort.getUserById(userId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userPersistencePort.getUserByEmail(email);
+    }
 
 }
 

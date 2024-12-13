@@ -43,6 +43,7 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UserRequestDto employee) {
         userHandler.saveUserInUsers(employee);
+        userHandler.saveRestaurantAndEmployee(employee);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -75,8 +76,16 @@ public class UserRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("existsUserById/{id}")
-    public  ResponseEntity<Boolean> getUserById(@PathVariable(value = "id") Long userId){
+    public  ResponseEntity<Boolean> existsUserById(@PathVariable(value = "id") Long userId){
         return ResponseEntity.ok(userHandler.existUserById(userId));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserResponseDto> getUserByEmail(@PathVariable(value = "email") String userEmail){
+        return ResponseEntity.ok(userHandler.getUserByEmail(userEmail));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable(value = "id")Long userId){
+        return ResponseEntity.ok(userHandler.getUserById(userId));
+    }
 }

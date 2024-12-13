@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final IUserEntityMapper userEntityMapper;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findOneByEmail(email).orElseThrow(()->new UsernameNotFoundException("El usuario con email "+email+" no existe."));
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("El usuario con email "+email+" no existe."));
         User user= userEntityMapper.toUser(userEntity);
 
         return new UserDetailsImpl(user);

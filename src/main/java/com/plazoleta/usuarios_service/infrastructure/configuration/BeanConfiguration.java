@@ -12,7 +12,7 @@ import com.plazoleta.usuarios_service.domain.spi.persistence.IUserPersistencePor
 import com.plazoleta.usuarios_service.domain.usecase.RolUseCase;
 import com.plazoleta.usuarios_service.domain.usecase.UserUseCase;
 import com.plazoleta.usuarios_service.infrastructure.output.feignclients.RestaurantAndEmployeeFeignClient;
-import com.plazoleta.usuarios_service.infrastructure.output.feignclients.RestaurantFeignClient;
+import com.plazoleta.usuarios_service.infrastructure.output.feignclients.IRestaurantFeignClient;
 import com.plazoleta.usuarios_service.infrastructure.output.feignclients.adapter.RestaurantAndEmployeeFeignAdapter;
 import com.plazoleta.usuarios_service.infrastructure.output.feignclients.adapter.RestaurantFeignAdapter;
 import com.plazoleta.usuarios_service.infrastructure.output.jpa.adapter.RolJpaAdapter;
@@ -36,7 +36,7 @@ public class BeanConfiguration {
     private final IRolEntityMapper rolEntityMapper;
     private final RestaurantAndEmployeeFeignClient restaurantAndEmployeeFeignClient;
     private final IRestaurantAndEmployeeRequestMapper restaurantAndEmployeeRequestMapper;
-    private final RestaurantFeignClient restaurantFeignClient;
+    private final IRestaurantFeignClient IRestaurantFeignClient;
     private final IRestaurantResponseMapper restaurantResponseMapper;
 
 
@@ -79,7 +79,7 @@ public class BeanConfiguration {
 
     @Bean
     public IRestaurantFeingClientPort restaurantFeignClientPort(){
-        return  new RestaurantFeignAdapter(restaurantFeignClient, restaurantResponseMapper);
+        return  new RestaurantFeignAdapter(IRestaurantFeignClient, restaurantResponseMapper);
     }
 
 }

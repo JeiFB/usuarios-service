@@ -4,17 +4,17 @@ import com.plazoleta.usuarios_service.application.dtos.response.RestaurantRespon
 import com.plazoleta.usuarios_service.application.mapper.IRestaurantResponseMapper;
 import com.plazoleta.usuarios_service.domain.models.Restaurant;
 import com.plazoleta.usuarios_service.domain.spi.feignclients.IRestaurantFeingClientPort;
-import com.plazoleta.usuarios_service.infrastructure.output.feignclients.RestaurantFeignClient;
+import com.plazoleta.usuarios_service.infrastructure.output.feignclients.IRestaurantFeignClient;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class RestaurantFeignAdapter implements IRestaurantFeingClientPort {
 
-    private  final RestaurantFeignClient restaurantFeignClient;
+    private  final IRestaurantFeignClient IRestaurantFeignClient;
     private  final IRestaurantResponseMapper restaurantResponseMapper;
     @Override
     public Restaurant getRestaurantByOwnerId(Long ownerId) {
-        RestaurantResponseDto restaurantResponseDto = restaurantFeignClient.getRestaurantByOwnerId(ownerId);
+        RestaurantResponseDto restaurantResponseDto = IRestaurantFeignClient.getRestaurantByOwnerId(ownerId);
         return restaurantResponseMapper.toRestaurantModel(restaurantResponseDto);
     }
 }
