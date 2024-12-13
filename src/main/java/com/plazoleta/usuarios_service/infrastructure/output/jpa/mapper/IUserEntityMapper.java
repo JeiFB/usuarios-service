@@ -20,5 +20,4 @@ public interface IUserEntityMapper {
 
     @Mapping(target = "rol.id", source = "rol.id")
     User toUser(UserEntity userEntity);
-
 }

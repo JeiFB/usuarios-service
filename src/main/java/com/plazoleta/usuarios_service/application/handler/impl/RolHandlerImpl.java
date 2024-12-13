@@ -1,7 +1,8 @@
-package com.plazoleta.usuarios_service.application.handler;
+package com.plazoleta.usuarios_service.application.handler.impl;
 
 import com.plazoleta.usuarios_service.application.dtos.request.RolRequestDto;
 import com.plazoleta.usuarios_service.application.dtos.response.RolResponseDto;
+import com.plazoleta.usuarios_service.application.handler.IRolHandler;
 import com.plazoleta.usuarios_service.application.mapper.IRolRequestMapper;
 import com.plazoleta.usuarios_service.application.mapper.IRolResponseMapper;
 import com.plazoleta.usuarios_service.domain.api.IRolServicePort;

@@ -21,12 +21,12 @@ public class TokenAdapter implements IToken {
     @Override
     public Long getUserAuthId(String token) {
         if(token==(null)) throw  new IllegalArgumentException();
-        return TokenUtils.getUsuarioAutenticadoId(token.replace("Bearer ",""));
+        return TokenUtils.getUserAuthenticationId(token.replace("Bearer ",""));
     }
 
     @Override
     public String getUserAuthRol(String token) {
         if(token==(null)) throw  new IllegalArgumentException();
-        return TokenUtils.getUsuarioAutenticadoRol(token.replace("Bearer ",""));
+        return TokenUtils.getUserAuthenticationRol(token.replace("Bearer ",""));
     }
 }

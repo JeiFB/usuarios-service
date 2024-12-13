@@ -1,22 +1,13 @@
 package com.plazoleta.usuarios_service.application.dtos.response;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RolResponseDto {
+    private Long id;
     private String nameRol;
     private String descriptionRol;
-
-    public String getNameRol() {
-        return nameRol;
-    }
-
-    public void setNameRol(String nameRol) {
-        this.nameRol = nameRol;
-    }
-
-    public String getDescriptionRol() {
-        return descriptionRol;
-    }
-
-    public void setDescriptionRol(String descriptionRol) {
-        this.descriptionRol = descriptionRol;
-    }
 }

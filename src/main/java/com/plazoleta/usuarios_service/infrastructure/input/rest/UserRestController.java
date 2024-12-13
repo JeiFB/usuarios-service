@@ -1,6 +1,7 @@
 package com.plazoleta.usuarios_service.infrastructure.input.rest;
 
 import com.plazoleta.usuarios_service.application.dtos.request.UserRequestDto;
+import com.plazoleta.usuarios_service.application.dtos.response.UserResponseDto;
 import com.plazoleta.usuarios_service.application.handler.IUserHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,16 +11,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserRestController {
     private final IUserHandler userHandler;
-
 
     public UserRestController(IUserHandler userHandler){
         this.userHandler = userHandler;
@@ -37,8 +34,6 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-
-
     @Operation(summary = "Add a new employee")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Employee created", content = @Content),
@@ -48,8 +43,7 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UserRequestDto employee) {
         userHandler.saveUserInUsers(employee);
-        //userHandler.saveRestaurantEmployee(empleado);
-
+        userHandler.saveRestaurantAndEmployee(employee);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -75,4 +69,23 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "Exist a user by ID (Boolean)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    @GetMapping("existsUserById/{id}")
+    public  ResponseEntity<Boolean> existsUserById(@PathVariable(value = "id") Long userId){
+        return ResponseEntity.ok(userHandler.existUserById(userId));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserResponseDto> getUserByEmail(@PathVariable(value = "email") String userEmail){
+        return ResponseEntity.ok(userHandler.getUserByEmail(userEmail));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable(value = "id")Long userId){
+        return ResponseEntity.ok(userHandler.getUserById(userId));
+    }
 }

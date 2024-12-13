@@ -12,17 +12,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface IUserRequestMapper {
-    @Mapping(target = "rol", source = "rol", qualifiedByName = "mapRole")
+    @Mapping(target = "rol.id", source = "rol")
     User toUser(UserRequestDto userRequestDto);
 
-
-    @org.mapstruct.Named("mapRole")
-    default Rol mapRole(Long rolId) {
-        if (rolId == null) {
-            return null;
-        }
-        Rol role = new Rol();
-        role.setId(rolId);
-        return role;
-    }
 }

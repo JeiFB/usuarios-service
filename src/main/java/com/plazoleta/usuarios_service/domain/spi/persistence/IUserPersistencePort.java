@@ -5,5 +5,7 @@ import com.plazoleta.usuarios_service.domain.models.User;
 
 public interface IUserPersistencePort {
     void saveUser(User user);
-    Boolean existsByEmail(String email);
+    User getUserByEmail(String email);
+    Boolean existsUserById(Long id);
+    User getUserById(Long userId);
 }
